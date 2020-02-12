@@ -12,7 +12,6 @@ const SearchUser = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-
     GitHubUser.getByUsername(username)
       .then(res => {
         props.updateUser(res.data)
