@@ -1,71 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GitHubUser from '../../services/GitHubUsers/';
 
-class SearchUser extends React.Component {
-  
-  constructor(props){
-    super(props);
-    this.state = {
-      username: '',
-    }
-  }
+const SearchUser = (props) => {
+  const [ username, setUsername ] = useState('');
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name] : value })
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setUsername( value );
   }
   
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    GitHubUser.getByUsername(username)
+      .then(res => {
+        props.updateUser(res.data)
+      })
 
-    console.log(this.state.username);
+    GitHubUser.getReposByUsername(username)
+      .then(res => {
+        props.updateRepos(res.data)
 
-    GitHubUser.getByUsername(this.state.username)
-          .then(res => {
-            this.props.updateUser(res.data)
-          })
-
-    GitHubUser.getReposByUsername(this.state.username)
-          .then(res => {
-            this.props.updateRepos(res.data)
-
-          })
+      })
   }  
 
-  // this.propTypes = {
-  //   updateUser: this.propTypes.function.isRequired,
-  //   updateRes: this.propTypes.function.isRequired,
-  // }
-
-  render(){
-    const { username } = this.state;
-    return(
-      <>
-        <div className="container">
-          <div className="jumbotron">
-            <h1>GitHub Info</h1>
-            <div className="row">
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <input 
-                    type="text"
-                    name="username"
-                    value={username}
-                    onChange={this.handleChange}
-                    className="form-control"
-                    placeholder="Ex: matheusml"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary">Buscar</button>
-              </form>
-            </div>
+  return(
+      <div className="container">
+        <div className="jumbotron">
+          <h1>GitHub Info</h1>
+          <div className="row">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <input 
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={handleChange}
+                  className="form-control"
+                  placeholder="Ex: matheusml"
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary">Buscar</button>
+            </form>
           </div>
         </div>
-      </>
-    )
-  }
+      </div>
+  )
 }
 
 export default SearchUser;
