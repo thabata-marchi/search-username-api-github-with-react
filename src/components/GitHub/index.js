@@ -14,7 +14,7 @@ const Github = () => {
   }
 
   return(
-    <div className="container">
+    <div className="container-fluid">
       <SearchUser 
         updateUser={updateUser} 
         updateRepos={updateRepos} />
