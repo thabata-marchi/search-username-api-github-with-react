@@ -18,10 +18,4 @@ const UserInfo = (props) => {
     ) : null;
     return userInfo;
 }
-
-// UserInfo.propTypes = {
-//   user: React.PropTypes.object,
-//   repos: React.PropTypes.array,
-// };
-
 export default UserInfo;

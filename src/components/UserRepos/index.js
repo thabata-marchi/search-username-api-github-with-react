@@ -26,7 +26,6 @@ const UserRepos = (props) => {
       {repos}
     </div>
   )
-
 }
 
 export default UserRepos;

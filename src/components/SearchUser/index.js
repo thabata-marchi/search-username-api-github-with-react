@@ -3,7 +3,7 @@ import GitHubUser from '../../services/GitHubUsers/';
 
 const SearchUser = (props) => {
   const [ username, setUsername ] = useState('');
-
+  
   const handleChange = (event) => {
     const { value } = event.target;
     setUsername( value );
@@ -19,7 +19,6 @@ const SearchUser = (props) => {
     GitHubUser.getReposByUsername(username)
       .then(res => {
         props.updateRepos(res.data)
-
       })
   }  
 
@@ -48,5 +47,4 @@ const SearchUser = (props) => {
       </div>
   )
 }
-
 export default SearchUser;
